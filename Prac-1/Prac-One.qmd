@@ -1,10 +1,12 @@
 ---
-title: "Prac-1"
+title: "Practical 1"
 format: html
 ---
 
+## Question 1
+
 ```{r}
-# Load the airquality dataset (available by default in R)
+# Load the airquality dataset 
 data("airquality")
 
 # Find rows with missing values
@@ -12,8 +14,9 @@ missing_rows <- airquality[!complete.cases(airquality), ]
 
 # Display the rows with missing values
 print(missing_rows)
-
 ```
+
+## Question 2
 
 ```{r}
 # Function to find sd, mean, min, max
@@ -32,6 +35,8 @@ print(sumstats(airquality$Ozone))
 print(sumstats(airquality$Temp))
 ```
 
+## Question 3
+
 ```{r}
 # Load the built-in cars dataset
 data("cars")
@@ -40,7 +45,7 @@ data("cars")
 y <- cars$dist
 x <- cbind(1, cars$speed)  # Design matrix (adding intercept column of 1s)
 
-# Compute coefficient estimates using the normal equation
+# Function to compute beta estimates, standard errors using the normal equation
 beta_hat <- solve(t(x) %*% x) %*% t(x) %*% y
 
 # Display the estimated coefficients
@@ -49,10 +54,12 @@ rownames(beta_hat) <- c("Intercept", "Speed")
 print(beta_hat)
 ```
 
+## Question 4
+
 ```{r}
 # Check computed estimates against lm function output
 model1 <- lm(dist~speed, data=cars)
-model1
+summary(model1)
 
 # Display results
 cat("Matrix Calculation Estimates:\n")

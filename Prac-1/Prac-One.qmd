@@ -3,23 +3,61 @@ title: "Prac-1"
 format: html
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
 ```{r}
-1 + 1
+# Load the airquality dataset (available by default in R)
+data("airquality")
+
+# Find rows with missing values
+missing_rows <- airquality[!complete.cases(airquality), ]
+
+# Display the rows with missing values
+print(missing_rows)
+
 ```
 
-You can add options to executable code like this
-
 ```{r}
-#| echo: false
-2 * 2
+# Function to find sd, mean, min, max
+
+sumstats <- function(x) {
+  stats <- data.frame(
+    StdDev = sd(x, na.rm = TRUE), # ignoring missing values
+    Mean = mean(x, na.rm = TRUE),
+    Min = min(x, na.rm = TRUE),
+    Max = max(x, na.rm = TRUE)
+  )
+  return(stats)
+}
+
+print(sumstats(airquality$Ozone))
+print(sumstats(airquality$Temp))
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+# Load the built-in cars dataset
+data("cars")
+
+# Define response (Y) and predictor (X) variables
+y <- cars$dist
+x <- cbind(1, cars$speed)  # Design matrix (adding intercept column of 1s)
+
+# Compute coefficient estimates using the normal equation
+beta_hat <- solve(t(x) %*% x) %*% t(x) %*% y
+
+# Display the estimated coefficients
+colnames(beta_hat) <- c("Estimate")
+rownames(beta_hat) <- c("Intercept", "Speed")
+print(beta_hat)
+```
+
+```{r}
+# Check computed estimates against lm function output
+model1 <- lm(dist~speed, data=cars)
+model1
+
+# Display results
+cat("Matrix Calculation Estimates:\n")
+print(beta_hat)
+
+cat("\nLM Function Estimates:\n")
+print(coef(model1))
+```

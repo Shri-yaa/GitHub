@@ -7,6 +7,17 @@ number-sections: true
 code-fold: true  # Collapsible code blocks
 ---
 
+# 📌 **Introduction**
+
+This report explores the built-in R ***airquality*** and ***cars*** datasets.
+
+We will:\
+🎯Identify missing values
+
+🎯Compute summary statistics
+
+🎯Perform a linear regression using matrix calculations and verify the results
+
 # ✅ **Looking at Missing Values**
 
 ```{r}

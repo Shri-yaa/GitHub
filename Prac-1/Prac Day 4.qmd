@@ -1,0 +1,62 @@
+---
+title: "Practical Day 4"
+format: html
+toc: true
+toc-depth: 2
+number-sections: true
+code-fold: true
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+# Displaying the Data
+
+```{r}
+# Install tidyverse if not already installed
+if (!requireNamespace("tidyverse", quietly = TRUE)) {
+  install.packages("tidyverse")
+}
+library(tidyverse)
+
+# Install and load nycflights13 for flight data
+if (!requireNamespace("nycflights13", quietly = TRUE)) {
+  install.packages("nycflights13")
+}
+library(nycflights13)
+
+dplyr::glimpse(flights)
+```
+
+# Summary Stats per Carrier
+
+```{r}
+dist_tbl <- flights |> # subset the data
+  filter(month == 1) |>
+  group_by(carrier) |> # another way to select distinct occurrences 
+  summarise(
+    mean_dist = mean(distance, na.rm = TRUE),
+    sd_dist = sd(distance, na.rm = TRUE)
+    ) |>
+  arrange(mean_dist) # arrange other columns in order of mean dist
+
+print(dist_tbl)
+```
+
+# NA and 0 sd values
+
+```{r}
+flights |>
+  filter(month == 1) |>
+  group_by(carrier) |>
+  summarise(
+    num_flights = n(), # counts the flights per carrier
+    uniq_dist = n_distinct(distance), # counts the unique distances
+    mean_dist = mean(distance, na.rm = TRUE),
+    sd_dist = sd(distance, na.rm = TRUE)
+    ) |>
+  arrange(num_flights) 
+```
+
+\##

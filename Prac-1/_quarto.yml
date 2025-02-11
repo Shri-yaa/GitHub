@@ -1,5 +1,20 @@
 project:
-  title: "Prac-1"
+  type: website
+website:
+  title: "Practicals for peer review"
+  description: Inclues Prac 1, Prac 2 & Prac Day 4
+  navbar: 
+    left:
+      - href: index.qmd
+        text: "Homepage"
+    right:
+      - text: "Prac 1"
+        href: Prac 1.qmd
+      - text: "Prac 2"
+        href: Prac 2.qmd
+      - text: "Prac Day 4"
+        href: Prac Day 4.qmd
+      
 
 editor: visual
 

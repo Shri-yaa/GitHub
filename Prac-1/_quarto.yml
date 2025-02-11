@@ -9,7 +9,7 @@ website:
         text: "Homepage"
     right:
       - text: "Practical 1"
-        href: Prac 1.qmd
+        href: Prac-One.qmd
       - text: "Practical 2"
         href: Prac 2.qmd
       - text: "Practical Day 4"

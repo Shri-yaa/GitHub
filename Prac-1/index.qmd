@@ -3,7 +3,7 @@ title: "Home Page"
 format: html
 ---
 
-# Statistical Computing 2025
+# Statistical Computing 2025 🎯🏆🚀
 
 ## Prac Answers
 

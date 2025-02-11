@@ -1,0 +1,12 @@
+---
+title: "Home Page"
+format: html
+---
+
+# Statistical Computing 2025
+
+## Prac Answers
+
+This site contains my prac answers for **Prac 1, Prac 2 and Prac Day 4**. Feel free to navigate through the site using the navigation panel above.
+
+Also, my link to Github: https://github.com/Shri-yaa/GitHub

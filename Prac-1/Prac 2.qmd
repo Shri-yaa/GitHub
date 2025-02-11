@@ -1,25 +1,71 @@
 ---
 title: "Prac 2"
 format: html
+toc: true
+toc-depth: 2
+number-sections: true
+code-fold: true
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+# Question 1
 
 ```{r}
-1 + 1
+set.seed(1)
+x <- 1:100
+y <- sin(x/10) + rnorm(100,,sd=0.2)
 ```
 
-You can add options to executable code like this
+# Question 2
 
 ```{r}
-#| echo: false
-2 * 2
+# Custom LOWESS function
+customLowess <- function(x, y, f) {
+  n <- length(x)
+  y_smooth <- numeric(n)
+  
+  for (i in 1:n) {
+    # Calculate distances
+    dists <- abs(x - x[i])
+    
+    # Determine the span width
+    span <- sort(dists)[round(f * n)]
+    
+    # Identify weights using the tricube function
+    weights <- (1 - (dists / span)^3)^3 * (dists < span)
+    
+    # Fit a weighted linear regression
+    if (sum(weights) > 0) {
+      fit <- lm(y ~ x, weights = weights)
+      y_smooth[i] <- predict(fit, newdata = data.frame(x = x[i]))
+    } else {
+      y_smooth[i] <- y[i]
+    }
+  }
+  return(y_smooth)
+}
+
+# Smoothing factor
+f <- 0.2
+
+# Apply custom LOWESS
+y_custom <- customLowess(x, y, f)
+
+# Apply built-in lowess with iter = 0
+lowess_result <- lowess(x, y, f = f, iter = 0)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+# Question 3
+
+```{r}
+plot(x, y, pch = 16, col = "gray", main = "Custom vs Built-in LOWESS", xlab = "x", ylab = "y")
+
+# Plot custom LOWESS curve
+lines(x, y_custom, col = "blue", lwd = 2, lty = 2)
+
+# Plot built-in LOWESS curve
+lines(lowess_result, col = "red", lwd = 2)
+
+# Add legend
+legend("topright", legend = c("Custom LOWESS", "Built-in LOWESS"), col = c("blue", "red"), lty = c(2, 1), lwd = 2)
+
+```

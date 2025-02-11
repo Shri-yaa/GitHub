@@ -10,16 +10,7 @@ code-fold: true
 # Question 1
 
 ```{r}
-# Install tidyverse if not already installed
-if (!requireNamespace("tidyverse", quietly = TRUE)) {
-  install.packages("tidyverse")
-}
 library(tidyverse)
-
-# Install and load nycflights13 for flight data
-if (!requireNamespace("nycflights13", quietly = TRUE)) {
-  install.packages("nycflights13")
-}
 library(nycflights13)
 print("Here is the flights dataset displayed in an alternative format:")
 dplyr::glimpse(flights)
@@ -28,6 +19,7 @@ dplyr::glimpse(flights)
 # Question 2
 
 ```{r}
+print("The following was rewritten using dplyr and the pipe:")
 dist_tbl <- flights |> # subset the data
   filter(month == 1) |>
   group_by(carrier) |> # another way to select distinct occurrences 

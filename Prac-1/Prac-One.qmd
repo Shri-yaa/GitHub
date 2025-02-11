@@ -7,7 +7,7 @@ number-sections: true
 code-fold: true  # Collapsible code blocks
 ---
 
-# ✅ **Looking at Missing Values**
+# Question 1
 
 ```{r}
 # Load the airquality dataset 
@@ -21,7 +21,7 @@ cat("The rows in the airquality dataset with missing values are shown below:")
 print(missing_rows)
 ```
 
-# 📊 **Summary Statistics for Temperature & Ozone**
+# Question 2
 
 ```{r}
 # Function to find sd, mean, min, max
@@ -42,7 +42,7 @@ cat("The summary stats for Temp are as follows:")
 print(sumstats(airquality$Temp))
 ```
 
-# 📐 **Linear Regression using Matrix Calculations**
+# Question 3
 
 ```{r}
 # Load the built-in cars dataset
@@ -89,7 +89,7 @@ cat("Here are some estimates found using matrix calculations")
 print(model_results)
 ```
 
-# 📊 Using `lm()` for Verification of Calculations
+# Question 4
 
 ```{r}
 # Check computed estimates against lm function output

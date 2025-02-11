@@ -7,11 +7,16 @@ number-sections: true
 code-fold: true
 ---
 
+```{r}
+#| include: false
+library(tidyverse)
+library(nycflights13)
+```
+
 # Question 1
 
 ```{r}
-library(tidyverse)
-library(nycflights13)
+
 print("Here is the flights dataset displayed in an alternative format:")
 dplyr::glimpse(flights)
 ```

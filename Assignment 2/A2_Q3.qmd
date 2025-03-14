@@ -3,23 +3,47 @@ title: "Question 3"
 format: html
 ---
 
-## Quarto
+```{r, warning=FALSE, message=FALSE}
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+library(doParallel)
+library(foreach)
+# Set a seed for reproducibility
+set.seed(123)
 
-## Running Code
+# Parameters
+n <- 50       # Sample size for each simulation
+B <- 1000     # Number of bootstrap replications per simulation
+nsim <- 1000  # Number of simulation iterations for coverage estimation
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+# Create and register a cluster (using 3 cores in this example)
+cl <- makeCluster(detectCores()-1)
+registerDoParallel(cl)
 
-```{r}
-1 + 1
+parallel_time <- system.time({
+  # Use foreach in parallel to simulate nsim times
+  coverage_parallel <- foreach(sim = 1:nsim, .combine = c) %dopar% {
+    # Draw a sample of size n from Exp(1)
+    sample_data <- rexp(n, rate = 1)
+    
+    # Bootstrap the sample mean B times
+    boot_means <- replicate(B, mean(sample(sample_data, size = n, replace = TRUE)))
+    
+    # Calculate the 95% percentile bootstrap CI
+    ci <- quantile(boot_means, probs = c(0.025, 0.975))
+    
+    # Return 1 if the true mean (1) is within the CI, else 0
+    as.numeric(1 >= ci[1] & 1 <= ci[2])
+  }
+})
+# Estimate the coverage probability
+coverage_prob_parallel <- mean(coverage_parallel)
+
+# Stop the cluster after parallel processing is complete
+stopCluster(cl)
+
+
+## Results
+cat("Parallel processing time:\n")
+print(parallel_time)
+cat("Estimated coverage (parallel):", coverage_prob_parallel, "\n\n")
 ```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).

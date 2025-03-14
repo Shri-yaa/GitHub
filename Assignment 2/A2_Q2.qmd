@@ -43,3 +43,11 @@ system.time({
 })
 
 ```
+
+Parallel computing is **not always faster**, especially when overhead costs (data transfer, communication, thread creation) dominate over the computational workload.
+
+#### **Findings:**
+
+-   **Small Iterations (One Bootstrap at a Time):** The **parallel version was sometimes slower** due to high overhead relative to computation time. Serial processing could be **just as fast or even faster** for small iterations.
+
+-   Batch Processing (Larger Chunks at a Time): When we bootstrapped **1000 samples per iteration**, parallel computing became **significantly faster**. Reducing the number of tasks made parallelization more efficient.

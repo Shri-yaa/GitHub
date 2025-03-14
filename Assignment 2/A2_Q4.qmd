@@ -3,23 +3,32 @@ title: "Question 4"
 format: html
 ---
 
-## Quarto
+```{r, warning=FALSE, message=FALSE}
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+# Load necessary libraries
+library(foreach)
+library(doParallel)
+library(iterators)
 
-## Running Code
+# Set up parallel backend
+num_cores <- detectCores() - 1  # Use one less than total cores
+cl <- makeCluster(num_cores)
+registerDoParallel(cl)
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+# Set seed for reproducibility
+set.seed(1234)
 
-```{r}
-1 + 1
+# Use foreach with the iter function
+max_values <- foreach(i = 1:3, .combine = c, .packages = "iterators") %dopar% {
+  vec <- rnorm(5, mean = 0, sd = 1)  # Generate 5 random normal values
+  max(vec)  # Find the maximum in each vector
+}
+
+# Print the results
+print(max_values)
+
+# Stop the parallel cluster
+stopCluster(cl)
+
+
 ```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).

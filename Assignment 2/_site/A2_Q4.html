@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Question 1 – Assignment 2</title>
+<title>Question 4 – Assignment 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -128,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./A2_Q1.html" aria-current="page"> 
+    <a class="nav-link" href="./A2_Q1.html"> 
 <span class="menu-text">Q1</span></a>
   </li>  
   <li class="nav-item">
@@ -140,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Q3</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./A2_Q4.html"> 
+    <a class="nav-link active" href="./A2_Q4.html" aria-current="page"> 
 <span class="menu-text">Q4</span></a>
   </li>  
   <li class="nav-item">
@@ -164,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Question 1</h1>
+<h1 class="title">Question 4</h1>
 </div>
 
 
@@ -183,135 +183,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreach)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)  <span class="co"># For parallel computing (optional)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Register parallel backend (optional for speed)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)  <span class="co"># Use available cores minus one</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set parameters</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>  <span class="co"># Sample size</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>num_reps <span class="ot">&lt;-</span> <span class="dv">100</span>  <span class="co"># Number of repetitions</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the simulation using foreach</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span>num_reps, <span class="at">.combine =</span> rbind) <span class="sc">%dopar%</span> {</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  sample_data <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> <span class="dv">1</span>)  <span class="co"># Generate random sample (mean = 1, rate = 1)</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  mean_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(sample_data)  <span class="co"># Compute sample mean</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  var_value <span class="ot">&lt;-</span> <span class="fu">var</span>(sample_data)  <span class="co"># Compute sample variance</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(mean_value, var_value)  <span class="co"># Return results as a vector</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Stop the parallel cluster</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert results to a data frame</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>results_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(results)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(results_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Mean"</span>, <span class="st">"Variance"</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(results_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(iterators)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up parallel backend</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>num_cores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>  <span class="co"># Use one less than total cores</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(num_cores)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Use foreach with the iter function</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>max_values <span class="ot">&lt;-</span> <span class="fu">foreach</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">.combine =</span> c, <span class="at">.packages =</span> <span class="st">"iterators"</span>) <span class="sc">%dopar%</span> {</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  vec <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)  <span class="co"># Generate 5 random normal values</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(vec)  <span class="co"># Find the maximum in each vector</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(max_values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                Mean  Variance
-result.1   0.9612042 0.9594884
-result.2   0.9615537 0.9293404
-result.3   0.9198921 0.8673551
-result.4   0.9757500 0.9327405
-result.5   0.8755243 0.7587205
-result.6   0.8172221 0.5125860
-result.7   0.8814824 0.7519167
-result.8   0.9554017 0.9199085
-result.9   1.0602324 0.9944048
-result.10  0.8560603 0.7123709
-result.11  1.0597792 0.8373112
-result.12  0.9802789 1.1417183
-result.13  0.8932915 0.7107498
-result.14  0.9493232 0.9725343
-result.15  1.2478527 1.4608095
-result.16  0.9661280 0.8526601
-result.17  1.0065820 1.2719195
-result.18  0.9992532 1.0078219
-result.19  1.0053778 0.7515036
-result.20  1.0360150 1.6397898
-result.21  0.9446136 0.8322017
-result.22  1.0656578 1.2230594
-result.23  0.8070283 0.7922756
-result.24  1.1086807 1.0899640
-result.25  1.0321979 1.2222286
-result.26  1.0839638 1.2068739
-result.27  1.0037463 1.3662887
-result.28  0.9873794 1.0224691
-result.29  0.9239527 0.7779715
-result.30  1.0879179 1.1322890
-result.31  0.9510614 0.7072990
-result.32  1.0046839 1.2814747
-result.33  1.0028416 1.1331186
-result.34  1.0219898 1.1074680
-result.35  1.2013184 1.6943344
-result.36  0.9383009 0.9518306
-result.37  0.9841594 0.9800165
-result.38  0.9194831 0.9948857
-result.39  0.9419981 0.7755908
-result.40  0.8821256 0.7466489
-result.41  0.8889299 0.7289561
-result.42  1.0498458 0.8290988
-result.43  0.9524017 0.8766701
-result.44  1.1738793 0.9509938
-result.45  0.9372160 0.6061841
-result.46  1.0746673 1.0567581
-result.47  0.8734154 1.0554500
-result.48  0.9983400 1.1149525
-result.49  0.9287761 0.8538065
-result.50  0.9692827 0.8811431
-result.51  1.0376702 1.0134880
-result.52  0.9820545 0.8739651
-result.53  1.0165112 0.8553044
-result.54  0.9956219 1.0441159
-result.55  0.9101846 0.8226702
-result.56  0.9171555 0.9456718
-result.57  0.8888892 0.5697021
-result.58  0.9556831 0.6685417
-result.59  0.9143202 0.6724585
-result.60  1.0451803 1.1608889
-result.61  0.9375108 1.4124795
-result.62  0.8775826 0.8769869
-result.63  1.0240547 0.8708812
-result.64  1.0345160 0.7962334
-result.65  1.1075407 1.2183867
-result.66  1.1054633 1.2141768
-result.67  0.9959681 0.9298639
-result.68  0.9853695 0.8154674
-result.69  0.9934023 0.8726899
-result.70  1.0133769 0.8171821
-result.71  1.0674243 1.0664797
-result.72  1.0431224 0.9990336
-result.73  0.9804615 1.1873820
-result.74  0.9659615 0.8441565
-result.75  1.0229066 1.0882867
-result.76  1.0362160 1.0781475
-result.77  1.1175122 1.2041353
-result.78  0.9545197 0.9369768
-result.79  1.1497559 1.3111474
-result.80  0.8596756 0.7856924
-result.81  1.3006333 2.1947540
-result.82  1.0715638 0.8728679
-result.83  0.8068901 0.6212107
-result.84  0.9491872 0.6603105
-result.85  1.0685584 0.7437243
-result.86  1.2510810 1.4843621
-result.87  1.1375492 1.8947101
-result.88  0.9377290 0.8194536
-result.89  0.8767218 0.6723423
-result.90  1.1650412 1.5621484
-result.91  1.0323984 1.2193313
-result.92  0.9119094 0.6301498
-result.93  0.9722674 0.7862096
-result.94  0.9696840 1.0945745
-result.95  1.1450739 1.8374880
-result.96  0.8094002 0.4731698
-result.97  1.0445225 1.1042314
-result.98  1.0323722 0.8569680
-result.99  1.0504514 1.0537388
-result.100 1.0085013 0.9514875</code></pre>
+<pre><code>[1] 1.5398977 1.5799125 0.8096265</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stop the parallel cluster</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

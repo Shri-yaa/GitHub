@@ -3,23 +3,55 @@ title: "Question 5"
 format: html
 ---
 
-## Quarto
+```{r, warning=FALSE, message=FALSE}
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+library(parallel)
+library(doParallel)
+library(foreach)
+library(iterators)
+library(bench)  # Using bench instead of microbenchmark
 
-## Running Code
+# Set seed for reproducibility
+set.seed(1234)
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+# Number of cores for parallel processing
+num_cores <- detectCores() - 1
+cl <- makeCluster(num_cores)
+registerDoParallel(cl)
 
-```{r}
-1 + 1
+# Define the function to generate random numbers and find max
+max_finder <- function(size) {
+  max(rnorm(size))
+}
+
+# Parameters
+n <- 3   # Number of vectors
+size <- 5  # Length of each vector
+
+# Export variables to cluster
+clusterExport(cl, varlist = c("max_finder", "size"))
+
+# Benchmark different methods
+benchmark_results <- bench::mark(
+  parLapply = {
+    parLapply(cl, 1:n, function(i) max_finder(size))
+  },
+  foreach = {
+    foreach(i = 1:n, .combine = c, .export = "size") %dopar% {
+      max_finder(size)
+    }
+  },
+  replicate = {
+    replicate(n, max_finder(size))
+  },
+  iterations = 100,  # Repeat for accuracy
+  check = FALSE  # Allow different results
+)
+
+# Stop the cluster
+stopCluster(cl)
+
+# Print results
+print(benchmark_results)
+
 ```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).

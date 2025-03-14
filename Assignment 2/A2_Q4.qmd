@@ -5,7 +5,6 @@ format: html
 
 ```{r, warning=FALSE, message=FALSE}
 
-# Load necessary libraries
 library(foreach)
 library(doParallel)
 library(iterators)

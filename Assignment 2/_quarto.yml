@@ -1,5 +1,24 @@
 project:
+  type: website
+website:
   title: "Assignment 2"
+  description: Inclues Questions 1-5
+  navbar: 
+    left:
+      - href: index.qmd
+        text: "Homepage"
+    right:
+      - text: "Q1"
+        href: A2_Q1.qmd
+      - text: "Q2"
+        href: A2_Q2.qmd
+      - text: "Q3"
+        href: A2_Q3.qmd
+      - text: "Q4"
+        href: A2_Q4.qmd
+      - text: "Q5"
+        href: A2_Q5.qmd
+      
 
 editor: visual
 

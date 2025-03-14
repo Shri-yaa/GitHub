@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "A2_Q1.html",
+    "href": "A2_Q1.html",
+    "title": "Question 1",
+    "section": "",
+    "text": "library(foreach)\n\nWarning: package 'foreach' was built under R version 4.2.3\n\nlibrary(doParallel)  # For parallel computing (optional)\n\nWarning: package 'doParallel' was built under R version 4.2.3\n\n\nLoading required package: iterators\n\n\nWarning: package 'iterators' was built under R version 4.2.3\n\n\nLoading required package: parallel\n\n# Register parallel backend (optional for speed)\ncl &lt;- makeCluster(detectCores() - 1)  # Use available cores minus one\nregisterDoParallel(cl)\n\n# Set parameters\nn &lt;- 100  # Sample size\nnum_reps &lt;- 100  # Number of repetitions\n\n# Run the simulation using foreach\nresults &lt;- foreach(i = 1:num_reps, .combine = rbind) %dopar% {\n  sample_data &lt;- rexp(n, rate = 1)  # Generate random sample (mean = 1, rate = 1)\n  mean_value &lt;- mean(sample_data)  # Compute sample mean\n  var_value &lt;- var(sample_data)  # Compute sample variance\n  c(mean_value, var_value)  # Return results as a vector\n}\n\n# Stop the parallel cluster\nstopCluster(cl)\n\n# Convert results to a data frame\nresults_df &lt;- as.data.frame(results)\ncolnames(results_df) &lt;- c(\"Mean\", \"Variance\")\n\n# Display the first few rows\nhead(results_df)\n\n              Mean  Variance\nresult.1 0.7833024 0.7436792\nresult.2 0.9315700 0.6074639\nresult.3 1.0452235 0.7330314\nresult.4 1.0547332 1.0676619\nresult.5 0.9241904 0.6234280\nresult.6 0.8228495 0.5029866"
+  },
+  {
+    "objectID": "A2_Q1.html#question-1",
+    "href": "A2_Q1.html#question-1",
+    "title": "Question 1",
+    "section": "",
+    "text": "library(foreach)\n\nWarning: package 'foreach' was built under R version 4.2.3\n\nlibrary(doParallel)  # For parallel computing (optional)\n\nWarning: package 'doParallel' was built under R version 4.2.3\n\n\nLoading required package: iterators\n\n\nWarning: package 'iterators' was built under R version 4.2.3\n\n\nLoading required package: parallel\n\n# Register parallel backend (optional for speed)\ncl &lt;- makeCluster(detectCores() - 1)  # Use available cores minus one\nregisterDoParallel(cl)\n\n# Set parameters\nn &lt;- 100  # Sample size\nnum_reps &lt;- 100  # Number of repetitions\n\n# Run the simulation using foreach\nresults &lt;- foreach(i = 1:num_reps, .combine = rbind) %dopar% {\n  sample_data &lt;- rexp(n, rate = 1)  # Generate random sample (mean = 1, rate = 1)\n  mean_value &lt;- mean(sample_data)  # Compute sample mean\n  var_value &lt;- var(sample_data)  # Compute sample variance\n  c(mean_value, var_value)  # Return results as a vector\n}\n\n# Stop the parallel cluster\nstopCluster(cl)\n\n# Convert results to a data frame\nresults_df &lt;- as.data.frame(results)\ncolnames(results_df) &lt;- c(\"Mean\", \"Variance\")\n\n# Display the first few rows\nhead(results_df)\n\n              Mean  Variance\nresult.1 0.7833024 0.7436792\nresult.2 0.9315700 0.6074639\nresult.3 1.0452235 0.7330314\nresult.4 1.0547332 1.0676619\nresult.5 0.9241904 0.6234280\nresult.6 0.8228495 0.5029866"
+  },
+  {
+    "objectID": "A2_Q2.html",
+    "href": "A2_Q2.html",
+    "title": "Question 2",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "A2_Q2.html#quarto",
+    "href": "A2_Q2.html#quarto",
+    "title": "Question 2",
+    "section": "",
+    "text": "Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see https://quarto.org."
+  },
+  {
+    "objectID": "A2_Q2.html#running-code",
+    "href": "A2_Q2.html#running-code",
+    "title": "Question 2",
+    "section": "Running Code",
+    "text": "Running Code\nWhen you click the Render button a document will be generated that includes both content and the output of embedded code. You can embed code like this:\n\n1 + 1\n\n[1] 2\n\n\nYou can add options to executable code like this\n\n\n[1] 4\n\n\nThe echo: false option disables the printing of code (only output is displayed)."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home page",
+    "section": "",
+    "text": "This site contains my Parallel Computing prac answers. Feel free to navigate through the site using the navigation panel above.\nAlso, my link to Github: https://github.com/Shri-yaa/GitHub or you can click here"
+  },
+  {
+    "objectID": "index.html#prac-answers",
+    "href": "index.html#prac-answers",
+    "title": "Home page",
+    "section": "",
+    "text": "This site contains my Parallel Computing prac answers. Feel free to navigate through the site using the navigation panel above.\nAlso, my link to Github: https://github.com/Shri-yaa/GitHub or you can click here"
+  }
+]

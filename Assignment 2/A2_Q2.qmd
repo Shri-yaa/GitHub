@@ -1,0 +1,45 @@
+---
+title: "Question 2"
+format: html
+---
+
+```{r, warning=FALSE, message=FALSE}
+
+library(MASS)  # Contains the galaxies dataset
+library(foreach)
+library(doParallel)
+
+# Set up parallel backend
+num_cores <- detectCores() - 1  # Use available cores minus one
+cl <- makeCluster(num_cores)  # Create cluster
+registerDoParallel(cl)  # Register cluster for parallel computing
+
+# Define bootstrap function
+bootstrap_median <- function(data, B) {
+  n <- length(data)
+  foreach(i = 1:B, .combine = c, .packages = "MASS") %dopar% {
+    sample_data <- sample(data, size = n, replace = TRUE)  # Bootstrap sample
+    median(sample_data)  # Compute median
+  }
+}
+
+# Load dataset
+data <- galaxies
+
+# Number of bootstrap samples
+B <- 10000  # Adjust this value to experiment with runtime
+
+# Measure parallel execution time
+system.time({
+  parallel_results <- bootstrap_median(data, B)
+})
+
+# Stop the parallel cluster
+stopCluster(cl)
+
+# Measure serial execution time
+system.time({
+  serial_results <- replicate(B, median(sample(data, size = length(data), replace = TRUE)))
+})
+
+```

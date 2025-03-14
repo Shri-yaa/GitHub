@@ -1,0 +1,35 @@
+---
+title: "Question 1"
+format: html
+---
+
+```{r, warning=FALSE, message=FALSE}
+
+library(foreach)
+library(doParallel)  # For parallel computing (optional)
+
+# Register parallel backend (optional for speed)
+cl <- makeCluster(detectCores() - 1)  # Use available cores minus one
+registerDoParallel(cl)
+
+# Set parameters
+n <- 100  # Sample size
+num_reps <- 100  # Number of repetitions
+
+# Run the simulation using foreach
+results <- foreach(i = 1:num_reps, .combine = rbind) %dopar% {
+  sample_data <- rexp(n, rate = 1)  # Generate random sample (mean = 1, rate = 1)
+  mean_value <- mean(sample_data)  # Compute sample mean
+  var_value <- var(sample_data)  # Compute sample variance
+  c(mean_value, var_value)  # Return results as a vector
+}
+
+# Stop the parallel cluster
+stopCluster(cl)
+
+# Convert results to a data frame
+results_df <- as.data.frame(results)
+colnames(results_df) <- c("Mean", "Variance")
+
+print(results_df)
+```

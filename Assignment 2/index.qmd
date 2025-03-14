@@ -1,0 +1,13 @@
+---
+title: "Home page"
+author: "Shriyaa Sooklal"
+format: html
+---
+
+# Statistical Computing 2025 🎯🏆🚀
+
+## Prac Answers
+
+This site contains my Parallel Computing prac answers. Feel free to navigate through the site using the navigation panel above.
+
+Also, my link to Github: https://github.com/Shri-yaa/GitHub or you can [click here](https://github.com/Shri-yaa/GitHub)
